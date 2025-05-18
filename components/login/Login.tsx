@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Button, View } from "react-native";
+import { Button, Text, View } from "react-native";
 import { TextInput } from "react-native-gesture-handler";
 import { styles } from "./LoginStyles.styles";
 export default function Login() {
@@ -12,6 +12,7 @@ export default function Login() {
 
   return (
     <View style={styles.container}>
+      <Text style={styles.label}>Kocham Julcię</Text>
       <TextInput
         style={styles.input}
         placeholder="Email"

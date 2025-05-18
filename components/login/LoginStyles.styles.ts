@@ -13,8 +13,7 @@ export const styles = StyleSheet.create({
     marginBottom: 12,
     borderRadius: 4,
   },
-  error: {
-    marginBottom: 12,
-    color: "red",
+  label: {
+    color: "#fff",
   },
 });
