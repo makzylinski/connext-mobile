@@ -1,7 +1,7 @@
+import { formStyles } from "@/shared/styles/forms.styles";
 import { useState } from "react";
 import { Button, View } from "react-native";
 import { TextInput } from "react-native-gesture-handler";
-import { styles } from "./LoginStyles.styles";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -12,9 +12,9 @@ export default function Login() {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={formStyles.container}>
       <TextInput
-        style={styles.input}
+        style={formStyles.input}
         placeholder="Email"
         autoCapitalize="none"
         keyboardType="email-address"
@@ -23,7 +23,7 @@ export default function Login() {
       />
 
       <TextInput
-        style={styles.input}
+        style={formStyles.input}
         placeholder="Password"
         secureTextEntry
         value={password}

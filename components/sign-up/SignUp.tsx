@@ -1,8 +1,8 @@
 import { signUp } from "@/services/auth.api";
+import { formStyles } from "@/shared/styles/forms.styles";
 import { useRouter } from "expo-router";
 import { useState } from "react";
 import { Button, TextInput, View } from "react-native";
-import { styles } from "../login/LoginStyles.styles";
 
 export default function SignUp() {
   const [email, setEmail] = useState("");
@@ -25,9 +25,9 @@ export default function SignUp() {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={formStyles.container}>
       <TextInput
-        style={styles.input}
+        style={formStyles.input}
         placeholder="Email"
         autoCapitalize="none"
         keyboardType="email-address"
@@ -36,7 +36,7 @@ export default function SignUp() {
       />
 
       <TextInput
-        style={styles.input}
+        style={formStyles.input}
         placeholder="Password"
         secureTextEntry
         value={password}
@@ -44,7 +44,7 @@ export default function SignUp() {
       />
 
       <TextInput
-        style={styles.input}
+        style={formStyles.input}
         placeholder="Repeat Password"
         secureTextEntry
         value={confirmPassword}

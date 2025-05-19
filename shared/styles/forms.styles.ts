@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
 
-export const styles = StyleSheet.create({
+export const formStyles = StyleSheet.create({
   container: {
     padding: 16,
     flex: 1,
