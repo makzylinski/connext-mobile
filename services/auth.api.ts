@@ -1,4 +1,5 @@
 import { environment } from "@/environments/environment";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 
 const API_BASE_URL = environment.baseUrl;
@@ -18,6 +19,8 @@ export const fetchUsers = async () => {
 
 export const signUp = async (user: any) => {
   const response = await api.post("/register", user);
+  await AsyncStorage.setItem("authToken", response.data.token);
+  await AsyncStorage.setItem("user", JSON.stringify(response.data.user));
   return response.data;
 };
 
