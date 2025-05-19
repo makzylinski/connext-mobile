@@ -1,4 +1,5 @@
 import { signUp } from "@/services/auth.api";
+import { useRouter } from "expo-router";
 import { useState } from "react";
 import { Button, TextInput, View } from "react-native";
 import { styles } from "../login/LoginStyles.styles";
@@ -7,14 +8,20 @@ export default function SignUp() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const router = useRouter();
 
-  const onSignUp = () => {
-    signUp({
-      username: email,
-      email: email,
-      password: password,
-      role: "USER",
-    });
+  const onSignUp = async () => {
+    try {
+      await signUp({
+        username: email,
+        email: email,
+        password: password,
+        role: "USER",
+      });
+      router.replace("/explore");
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
