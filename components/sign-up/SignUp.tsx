@@ -18,7 +18,7 @@ export default function SignUp() {
         password: password,
         role: "USER",
       });
-      router.replace("/explore");
+      router.replace("/");
     } catch (error) {
       console.error(error);
     }
