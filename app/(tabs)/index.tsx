@@ -1,9 +1,10 @@
-import SignUp from "@/components/sign-up/SignUp";
+import ProfileSwiper from "@/screens/profile-swiper/ProfileSwiper";
+import { View } from "react-native";
 
 export default function HomeScreen() {
   return (
-    <>
-      <SignUp></SignUp>
-    </>
+    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+      <ProfileSwiper />
+    </View>
   );
 }
