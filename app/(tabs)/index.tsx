@@ -1,9 +1,9 @@
-import Login from "@/components/login/Login";
+import SignUp from "@/components/sign-up/SignUp";
 
 export default function HomeScreen() {
   return (
     <>
-      <Login></Login>
+      <SignUp></SignUp>
     </>
   );
 }
