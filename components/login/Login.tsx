@@ -1,15 +1,10 @@
+import { useLogin } from "@/hooks/auth/useLogin";
 import { formStyles } from "@/shared/styles/forms.styles";
-import { useState } from "react";
 import { Button, View } from "react-native";
 import { TextInput } from "react-native-gesture-handler";
 
 export default function Login() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-
-  const onLogin = () => {
-    console.log("login");
-  };
+  const { email, setEmail, password, setPassword, onLogin } = useLogin();
 
   return (
     <View style={formStyles.container}>
