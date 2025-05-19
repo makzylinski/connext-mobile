@@ -1,9 +1,10 @@
-import { Text, View } from "react-native";
+import ProfileSwiper from "@/screens/profile-swiper/ProfileSwiper";
+import { View } from "react-native";
 
 export default function HomeScreen() {
   return (
     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      <Text style={{ color: "white" }}>Welcome to the app!</Text>
+      <ProfileSwiper />
     </View>
   );
 }
