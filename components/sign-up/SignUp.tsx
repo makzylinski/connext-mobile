@@ -1,28 +1,17 @@
-import { signUp } from "@/services/auth.api";
+import useSignUp from "@/hooks/auth/useSignUp";
 import { formStyles } from "@/shared/styles/forms.styles";
-import { useRouter } from "expo-router";
-import { useState } from "react";
 import { Button, TextInput, View } from "react-native";
 
 export default function SignUp() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const router = useRouter();
-
-  const onSignUp = async () => {
-    try {
-      await signUp({
-        username: email,
-        email: email,
-        password: password,
-        role: "USER",
-      });
-      router.replace("/");
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  const {
+    email,
+    setEmail,
+    password,
+    setPassword,
+    confirmPassword,
+    setConfirmPassword,
+    onSignUp,
+  } = useSignUp();
 
   return (
     <View style={formStyles.container}>
