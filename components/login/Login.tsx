@@ -1,7 +1,8 @@
 import { useState } from "react";
-import { Button, Text, View } from "react-native";
+import { Button, View } from "react-native";
 import { TextInput } from "react-native-gesture-handler";
 import { styles } from "./LoginStyles.styles";
+
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -12,7 +13,6 @@ export default function Login() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.label}>Kocham Julcię</Text>
       <TextInput
         style={styles.input}
         placeholder="Email"
@@ -24,13 +24,13 @@ export default function Login() {
 
       <TextInput
         style={styles.input}
-        placeholder="Hasło"
+        placeholder="Password"
         secureTextEntry
         value={password}
         onChangeText={setPassword}
       />
 
-      <Button title="Zaloguj się" onPress={onLogin} />
+      <Button title="Log In" onPress={onLogin} />
     </View>
   );
 }
