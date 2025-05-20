@@ -1,46 +1,79 @@
-import { Animated, Dimensions, StyleSheet, Text } from "react-native";
+import React from "react";
+import { Dimensions, StyleSheet, Text } from "react-native";
 import { Gesture, GestureDetector } from "react-native-gesture-handler";
-import { runOnJS, useSharedValue, withSpring } from "react-native-reanimated";
+import Animated, {
+  Extrapolate,
+  interpolate,
+  runOnJS,
+  useAnimatedStyle,
+  useSharedValue,
+  withSpring,
+  withTiming,
+} from "react-native-reanimated";
 
-const SCREEN_WIDTH = Dimensions.get("window").width;
+const { width: SCREEN_WIDTH } = Dimensions.get("window");
 const SWIPE_THRESHOLD = SCREEN_WIDTH * 0.25;
 
 type SwipeableCardProps = {
-  profile: any; // Replace 'any' with a more specific type if available
-  onSwipeLeft: (profile: any) => void;
-  onSwipeRight: (profile: any) => void;
+  profile: { name: string };
+  onSwipeLeft: (profile: { name: string }) => void;
+  onSwipeRight: (profile: { name: string }) => void;
 };
 
-const SwipeableCard: React.FC<SwipeableCardProps> = ({
+export default function SwipeableCard({
   profile,
   onSwipeLeft,
   onSwipeRight,
-}) => {
+}: SwipeableCardProps) {
   const translateX = useSharedValue(0);
 
   const pan = Gesture.Pan()
-    .onUpdate((e) => {
-      translateX.value = e.translationX;
+    .onUpdate((event) => {
+      translateX.value = event.translationX;
     })
     .onEnd(() => {
       if (translateX.value > SWIPE_THRESHOLD) {
-        runOnJS(onSwipeRight)(profile);
-        translateX.value = withSpring(SCREEN_WIDTH);
+        translateX.value = withTiming(SCREEN_WIDTH, {}, () => {
+          runOnJS(onSwipeRight)(profile);
+        });
       } else if (translateX.value < -SWIPE_THRESHOLD) {
-        runOnJS(onSwipeLeft)(profile);
-        translateX.value = withSpring(-SCREEN_WIDTH);
+        translateX.value = withTiming(-SCREEN_WIDTH, {}, () => {
+          runOnJS(onSwipeLeft)(profile);
+        });
       } else {
         translateX.value = withSpring(0);
       }
     });
+
+  const animatedStyle = useAnimatedStyle(() => {
+    const rotate = interpolate(
+      translateX.value,
+      [-SCREEN_WIDTH, 0, SCREEN_WIDTH],
+      [-20, 0, 20],
+      Extrapolate.CLAMP
+    );
+
+    const opacity = interpolate(
+      Math.abs(translateX.value),
+      [0, SWIPE_THRESHOLD],
+      [1, 0.5],
+      Extrapolate.CLAMP
+    );
+
+    return {
+      transform: [{ translateX: translateX.value }, { rotate: `${rotate}deg` }],
+      opacity,
+    };
+  });
+
   return (
     <GestureDetector gesture={pan}>
-      <Animated.View style={[styles.card]}>
+      <Animated.View style={[styles.card, animatedStyle]}>
         <Text style={styles.text}>{profile.name}</Text>
       </Animated.View>
     </GestureDetector>
   );
-};
+}
 
 const styles = StyleSheet.create({
   card: {
@@ -59,8 +92,6 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 28,
-    color: "red",
     fontWeight: "bold",
   },
 });
-export default SwipeableCard;
