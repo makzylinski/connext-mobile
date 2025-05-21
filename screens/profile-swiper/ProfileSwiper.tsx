@@ -1,15 +1,28 @@
 import SwipeableCard from "@/components/swiper/Swiper";
-import { useState } from "react";
+import { getUsers } from "@/services/user.service";
+import { useEffect, useState } from "react";
 import { View } from "react-native";
 
 const profiles = [
   { id: 1, name: "Julia" },
   { id: 2, name: "Maks" },
-  { id: 3, name: "Ania" },
 ];
 
 export default function ProfileSwiper() {
   const [cards, setCards] = useState(profiles);
+
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        const users = await getUsers();
+        setCards(users);
+      } catch (error) {
+        console.error("Error fetching users:", error);
+      }
+    };
+
+    fetchUsers();
+  }, []);
 
   const removeTopCard = () => {
     setCards((prev) => prev.slice(1));
