@@ -12,6 +12,21 @@ export const api = axios.create({
   },
 });
 
+api.interceptors.request.use(
+  async (config) => {
+    const token = await AsyncStorage.getItem("authToken");
+
+    if (token && config.headers) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
+
 export const fetchUsers = async () => {
   const response = await api.get("/users");
   return response.data;

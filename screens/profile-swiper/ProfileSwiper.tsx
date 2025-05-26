@@ -16,6 +16,7 @@ export default function ProfileSwiper() {
       try {
         const users = await getUsers();
         setCards(users);
+        console.log("Fetched users:", users);
       } catch (error) {
         console.error("Error fetching users:", error);
       }
