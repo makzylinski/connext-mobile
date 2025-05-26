@@ -12,6 +12,21 @@ export const api = axios.create({
   },
 });
 
+api.interceptors.request.use(
+  async (config) => {
+    const token = await AsyncStorage.getItem("authToken");
+
+    if (token && config.headers) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
+
 export const fetchUsers = async () => {
   const response = await api.get("/users");
   return response.data;
@@ -29,5 +44,8 @@ export const loginUser = async (username: string, password: string) => {
     username,
     password,
   });
+  await AsyncStorage.setItem("authToken", response.data.token);
+  await AsyncStorage.setItem("user", JSON.stringify(response.data.user));
+
   return response.data;
 };
